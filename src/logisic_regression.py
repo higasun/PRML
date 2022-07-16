@@ -23,10 +23,13 @@ def plot(cls1, cls2, line):
 
 if __name__ == '__main__':
     
-    #テスト用2次元データ
-    cov = [[4,3],[4,2]] # 共分散
-    cls1 = np.random.multivariate_normal([-1.8, 1.8], cov, 100)
-    cls2 = np.random.multivariate_normal([1.8, -1.8], cov, 100)
+    # two-dimensional data
+    cov1 = [[2,0],[0, 2]] # Covariance of cls1
+    cov2 = [[2,0],[0, 2]] # Covariance of cls2
+    mean1 = [- 1.5,  1.5]
+    mean2 = [ 1.5, - 1.5]
+    cls1 = np.random.multivariate_normal(mean1, cov1, 100)
+    cls2 = np.random.multivariate_normal(mean2, cov2, 100)
 
     X = np.concatenate((cls1, cls2), axis=0)
     y = np.array([0]*len(cls1) + [1]*len(cls2))
@@ -38,11 +41,10 @@ if __name__ == '__main__':
     b = - clf.w[0] / clf.w[2]
     x_ = np.linspace(-8, 8, 1000)
     y_ = a * x_ + b
+
+    # prediction
+    y_pred = clf.predict(X)
+    print('accuracy: ', accuracy(y_pred, y))
     
     # plot
     plot(cls1, cls2, (x_, y_))
-
-    
-    y_pred = clf.predict(X)
-    print(accuracy(y_pred, y))
-   
