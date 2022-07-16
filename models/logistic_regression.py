@@ -7,7 +7,7 @@ def sigmoid(x):
 THRESMIN = 1e-10
 
 class LogisticRegression():
-    def __init__(self, tol=0.001, max_iter=3, random_seed=0) -> None:
+    def __init__(self, tol=0.001, max_iter=5, random_seed=0) -> None:
         self.w = None
         self.tol = tol
         self.random_state = np.random.RandomState(random_seed)
@@ -15,8 +15,9 @@ class LogisticRegression():
         pass
 
     def fit(self, X: np.array, t: np.array) -> None:
-        self.w  = self.random_state.randn(X.shape[0] + 1)
+        self.w  = self.random_state.randn(X.shape[1] + 1)
         Xtil =  np.c_[np.ones(X.shape[0]), X]
+        w_prev = self.w
         diff = np.inf
         iteration = 0
 
@@ -24,9 +25,9 @@ class LogisticRegression():
             y = sigmoid(np.dot(Xtil, self.w))
             r = np.clip(y * (1 - y), THRESMIN, np.inf)
             XR = Xtil.T * r
-            XRX = np.dot(XR, r)
+            XRX = np.dot(XR, Xtil)
             w_prev = self.w
-            b = np.dot(XR, np.dot(Xtil.T, self.w_) - 1/r * (y - t))
+            b = np.dot(XR, np.dot(Xtil, self.w) - 1/r * (y - t))
             self.w = linalg.solve(XRX, b)
             diff = abs(self.w - w_prev).mean()
             iteration += 1
