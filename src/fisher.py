@@ -23,8 +23,8 @@ def plot(cls1, cls2, line1, line2):
 
 if __name__ == '__main__':
     
-    #テスト用2次元データ
-    cov = [[4,3],[3,4]] # 共分散
+    # two-dimensional data
+    cov = [[4,3],[3,4]] # Covariance
     cls1 = np.random.multivariate_normal([-1.8, 1.8], cov, 100)
     cls2 = np.random.multivariate_normal([1.8, -1.8], cov, 100)
 
