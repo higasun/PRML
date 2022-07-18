@@ -21,6 +21,7 @@ class LogisticRegression():
         diff = np.inf
         iteration = 0
 
+        # iteration
         while diff > self.tol and iteration < self.max_iter:
             y = sigmoid(np.dot(Xtil, self.w))
             r = np.clip(y * (1 - y), THRESMIN, np.inf)
